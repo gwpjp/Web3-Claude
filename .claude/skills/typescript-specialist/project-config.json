@@ -1,0 +1,109 @@
+{
+  "project": {
+    "name": "Your Project Name",
+    "type": "React SPA (Vite + TypeScript)",
+    "packageManager": "yarn (never npm)",
+    "devServer": "Always running (port in vite.config.ts). Never start it.",
+    "verification": "yarn typecheck && yarn lint && yarn prettier && yarn build"
+  },
+  "typescript": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "strictFlags": {
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
+      "erasableSyntaxOnly": true,
+      "noFallthroughCasesInSwitch": true,
+      "noUncheckedSideEffectImports": true
+    },
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "noEmit": true,
+    "verbatimModuleSyntax": true,
+    "skipLibCheck": true
+  },
+  "pathAliases": {
+    "src/*": "src/*",
+    "components/*": "src/components/*",
+    "config/*": "src/config/*",
+    "containers/*": "src/containers/*",
+    "contexts/*": "src/contexts/*",
+    "hooks/*": "src/hooks/*",
+    "pages/*": "src/pages/*",
+    "services/*": "src/services/*",
+    "theme/*": "src/theme/*",
+    "types/*": "src/types/*",
+    "utils/*": "src/utils/*"
+  },
+  "projectStructure": {
+    "src/components/": "React components (use subfolders for groups)",
+    "src/components/Common/": "Shared styled components",
+    "src/hooks/": "Custom React hooks",
+    "src/hooks/blockchain/": "Contract write hooks and transform hooks",
+    "src/hooks/ponder/": "Raw Ponder data hooks (Layer 1)",
+    "src/pages/": "Route pages",
+    "src/types/": "TypeScript types + transformation functions",
+    "src/utils/": "Utility functions",
+    "src/services/": "External services, ABIs, Ponder client",
+    "src/config/": "Configuration",
+    "src/theme/": "MUI theme config (themeConfig.tsx)"
+  },
+  "conventions": {
+    "addressSafety": {
+      "rule": "NEVER use `as Address` to cast potentially undefined values",
+      "patterns": {
+        "withEnabledGuard": "Use non-null assertion `value!` when enabled guard guarantees existence",
+        "fallbackAddress": "Use `value ?? nullAddress` for contract simulation fallbacks",
+        "optionalReturn": "Use `value as Address | undefined` for optional addresses"
+      }
+    },
+    "numberFormatting": {
+      "rule": "Use existing utilities, never create custom formatters",
+      "component": "<NumberFormatter value={0.08} preset=\"percent\" />",
+      "function": "displayNumber(1234.56, \"currency\")",
+      "presets": ["percent", "currency", "number", "full", "fullPercent", "input", "tooltip"]
+    },
+    "timeConstants": {
+      "rule": "Use time constants from src/utils/time.ts",
+      "available": ["SECONDS_IN_A_MINUTE", "SECONDS_IN_A_HOUR", "SECONDS_IN_A_DAY", "SECONDS_IN_A_YEAR"]
+    },
+    "muiTheming": {
+      "rule": "Use theme values, never hardcoded styles",
+      "colors": "Use palette references: bgcolor='paper.primary', color='text.secondary'",
+      "typography": "Use variants: variant='h3', variant='body1'"
+    },
+    "chainData": {
+      "rule": "Always use ChainContainer, never wagmi directly",
+      "usage": "const { address, chainId, supportedChain } = ChainContainer.useContainer()"
+    },
+    "contractReads": {
+      "rule": "NEVER use useReadContract directly in components",
+      "pattern": "Encapsulate in hooks under src/hooks/blockchain/"
+    },
+    "dataLayerPattern": {
+      "rule": "Components must NEVER use raw Ponder hooks directly",
+      "layer1": "Ponder Hooks (src/hooks/ponder/) - Raw database queries",
+      "layer2": "Transform Hooks (src/hooks/blockchain/) - Typed domain objects"
+    },
+    "commonComponents": {
+      "rule": "Always check src/components/Common/ before using raw MUI",
+      "buttons": "CommonButton, CTAButton for blockchain actions",
+      "inputs": "CommonSearchInput, CommonTextInput, CommonAmountInput, CommonPercentInput, CommonAddressInput"
+    }
+  },
+  "keyDependencies": {
+    "viem": "Ethereum types (Address, TransactionReceipt, Abi)",
+    "wagmi": "React hooks for Ethereum",
+    "unstated-next": "Container-based state management (ChainContainer)",
+    "@tanstack/react-query": "Data fetching and caching",
+    "@mui/material": "UI component library",
+    "react-router-dom": "Routing"
+  },
+  "bigintHandling": {
+    "description": "This project uses bigint for blockchain values",
+    "conversionFunction": "fixedToFloat from utils/numberFormat",
+    "pattern": "fixedToFloat(BigInt(value), decimals)"
+  }
+}

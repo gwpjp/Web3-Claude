@@ -1,0 +1,17 @@
+{
+  "lastSyncAt": "2026-01-29T15:30:00Z",
+  "commitHash": "5d3be7be1a1d5bbe90ff0264a17c2d7c172d934a",
+  "branch": "main",
+  "commitMessage": "Increase portability",
+  "filesRegenerated": [
+    "ponder-schema-specialist/schema-reference.md",
+    "wagmi-specialist/hook-reference.md",
+    "wagmi-specialist/contracts-reference.md",
+    "web3-implementer/ponder-reference.md",
+    "typescript-specialist/type-index.json",
+    ".claude/docs/theme-reference.md",
+    ".claude/docs/component-reference.md",
+    "skills/routes.json"
+  ],
+  "note": "Full regeneration - first sync with corrected SKILL.md paths"
+}

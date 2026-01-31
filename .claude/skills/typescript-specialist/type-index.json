@@ -1,0 +1,8 @@
+{
+  "$schema": "Type index for typescript-specialist. Regenerate with /skill-sync types",
+  "generated": null,
+  "source": "src/types/",
+  "types": [],
+  "transforms": [],
+  "note": "Run /skill-sync types to populate from your codebase"
+}

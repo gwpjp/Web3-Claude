@@ -1,0 +1,16 @@
+{
+  "$schema": "Routes configuration for QA skills. Update when routes change.",
+  "addressSource": "Describe how to find test addresses for routes that need them",
+  "routes": [
+    {
+      "path": "/",
+      "name": "Dashboard",
+      "requiresAddress": false,
+      "focus": {
+        "visual-qa": "Layout renders, data loads, cards display correctly",
+        "accessibility": "Navigation, interactive elements",
+        "responsive": "Layout adapts across breakpoints"
+      }
+    }
+  ]
+}

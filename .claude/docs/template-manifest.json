@@ -1,0 +1,148 @@
+{
+  "$schema": "Manifest of .claude files for porting to new projects",
+  "version": "1.0.0",
+  "targetStack": {
+    "framework": "React 18+",
+    "language": "TypeScript",
+    "dataFetching": "TanStack Query v5",
+    "blockchain": "wagmi v3 + viem v2",
+    "indexer": "@ponder/react",
+    "ui": "MUI v5+",
+    "build": "Vite",
+    "packageManager": "yarn"
+  },
+  "files": {
+    "copy": {
+      "description": "Copy without modification",
+      "root": ["settings.json", "settings.local.json", "hooks.json"],
+      "commands": [
+        "commands/fix-number-format.md",
+        "commands/commit-push-pr.md"
+      ],
+      "docs": ["docs/data-patterns.md"],
+      "skills": [
+        "skills/verify/SKILL.md",
+        "skills/verify-app/SKILL.md",
+        "skills/code-simplifier/SKILL.md",
+        "skills/skill-sync/SKILL.md",
+        "skills/skill-sync/sync-targets.md",
+        "skills/skills-creator/SKILL.md",
+        "skills/ralph-loop/SKILL.md",
+        "skills/ralph-loop/guardrails.md",
+        "skills/ui-designer/SKILL.md",
+        "skills/theme-ui-specialist/SKILL.md",
+        "skills/react-specialist/SKILL.md",
+        "skills/design-dialogue/SKILL.md",
+        "skills/design-dialogue/dialogue-format.md",
+        "skills/ui-design-specialist/SKILL.md",
+        "skills/ui-design-specialist/anti-slop-patterns.md",
+        "skills/ui-design-jony-ive/SKILL.md",
+        "skills/ui-design-jony-ive/design-philosophy.md",
+        "skills/wagmi-specialist/SKILL.md",
+        "skills/react-query-specialist/SKILL.md",
+        "skills/react-query-specialist/best-practices.md",
+        "skills/ponder-schema-specialist/SKILL.md",
+        "skills/typescript-specialist/SKILL.md",
+        "skills/ui-refactor-specialist/SKILL.md",
+        "skills/code-refactor-specialist/SKILL.md",
+        "skills/types-refactor-specialist/SKILL.md",
+        "skills/visual-qa/SKILL.md",
+        "skills/visual-qa-chrome-profiler/SKILL.md",
+        "skills/visual-qa-lighthouse/SKILL.md",
+        "skills/visual-qa-react-devtools-profiler/SKILL.md",
+        "skills/visual-qa-react-analyzer/SKILL.md",
+        "skills/visual-qa-react-analyzer/anti-patterns.md",
+        "skills/accessibility-auditor/SKILL.md",
+        "skills/responsive-tester/SKILL.md",
+        "skills/performance-auditor/SKILL.md",
+        "skills/analyze-theme/SKILL.md",
+        "skills/new-component/SKILL.md",
+        "skills/new-hook/SKILL.md",
+        "skills/qa-prerequisites.md",
+        "skills/monitor/SKILL.md",
+        "skills/monitor/patterns.md"
+      ]
+    },
+    "parameterize": {
+      "description": "Copy and replace entity names with your project's domain entities",
+      "files": [
+        "CLAUDE.md",
+        "README.md",
+        "docs/project-rules.md",
+        "docs/component-reference.md",
+        "skills/agent-orchestrator/SKILL.md",
+        "skills/agent-orchestrator/agent-registry.md",
+        "skills/web3-implementer/SKILL.md",
+        "skills/web3-implementer/hook-patterns.md",
+        "skills/typescript-specialist/project-config.json",
+        "skills/form-edge-case-tester/SKILL.md"
+      ]
+    },
+    "regenerate": {
+      "description": "Must be regenerated from source code",
+      "files": [
+        {
+          "target": "docs/theme-reference.md",
+          "source": "src/theme/themeConfig.tsx",
+          "instructions": "Extract palette colors and typography variants into markdown tables"
+        },
+        {
+          "target": "skills/ponder-schema-specialist/schema-reference.md",
+          "source": "ponder.schema.ts or src/services/ponder/ponder.schema.ts",
+          "instructions": "Run `npx tsx scripts/generate-schema-reference.ts` if script exists, otherwise extract tables, columns, types, indexes, relations"
+        },
+        {
+          "target": "skills/wagmi-specialist/hook-reference.md",
+          "source": "src/hooks/blockchain/",
+          "instructions": "Scan directory for all hooks, categorize by type (read, write, transform), document params and returns"
+        },
+        {
+          "target": "skills/wagmi-specialist/contracts-reference.md",
+          "source": "src/services/contracts/generated.ts",
+          "instructions": "Scan for ABI exports, categorize by domain, document key functions and hook-to-contract mapping"
+        },
+        {
+          "target": "skills/web3-implementer/ponder-reference.md",
+          "source": "src/hooks/ponder/",
+          "instructions": "Catalog all ponder hooks with their query patterns"
+        },
+        {
+          "target": "skills/typescript-specialist/type-index.json",
+          "source": "src/types/",
+          "instructions": "Index all exported interfaces, types, and transform functions"
+        }
+      ]
+    },
+    "projectSpecific": {
+      "description": "Must be created new for each project",
+      "files": [
+        {
+          "target": "skills/routes.json",
+          "instructions": "Define all app routes with QA focus areas for each page"
+        },
+        {
+          "target": "skills/ui-designer/design-patterns.md",
+          "instructions": "Document page layouts, card sections, form patterns specific to this project"
+        },
+        {
+          "target": "commands/update-contracts.md",
+          "instructions": "Document contract address/ABI update workflow if applicable"
+        },
+        {
+          "target": "docs/PROTOCOL_SPECIFICATION.md",
+          "instructions": "Optional: Document domain-specific protocol knowledge"
+        }
+      ]
+    }
+  },
+  "validation": {
+    "requiredAfterSetup": [
+      "yarn typecheck passes",
+      "yarn lint passes",
+      "yarn build passes",
+      "/verify skill works",
+      "/agent-orchestrator loads without errors",
+      "CLAUDE.md loads in new Claude Code session"
+    ]
+  }
+}
