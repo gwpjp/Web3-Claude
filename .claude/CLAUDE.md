@@ -20,9 +20,24 @@ Beads provides persistent memory across sessions via git-synced issue tracking.
 
 ### Session End (Land the Plane)
 
-1. File discovered work: `bd create "description" -t bug|task|feature -p 0-4`
-2. Update worked items: `bd update <id> --status in_progress|closed`
-3. Sync to git: `bd sync`
+**Work is NOT complete until `git push` succeeds.**
+
+1. **File discovered work:** `bd create "description" -t bug|task|feature -p 0-4`
+2. **Run quality gates** (if code changed): `yarn typecheck && yarn lint && yarn prettier && yarn build`
+3. **Update worked items:** `bd update <id> --status in_progress|closed`
+4. **Push to remote** (MANDATORY):
+   ```bash
+   git pull --rebase
+   bd sync
+   git push
+   git status  # MUST show "up to date with origin"
+   ```
+5. **Hand off:** Provide context for next session
+
+**Critical rules:**
+- NEVER stop before pushing - that leaves work stranded locally
+- NEVER say "ready to push when you are" - YOU must push
+- If push fails, resolve and retry until it succeeds
 
 ### Spawning Agents
 
