@@ -9,6 +9,15 @@
             "command": "npx prettier --write \"$CLAUDE_FILE_PATH\" 2>/dev/null || true"
           }
         ]
+      },
+      {
+        "matcher": "git commit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bd sync 2>/dev/null || true"
+          }
+        ]
       }
     ]
   }

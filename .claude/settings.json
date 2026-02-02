@@ -16,7 +16,9 @@
       "Bash(node:*)",
       "Bash(npx prettier:*)",
       "Bash(npx eslint:*)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(bd:*)",
+      "Bash(jq:*)"
     ],
     "deny": [
       "Bash(rm -rf *)",
