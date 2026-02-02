@@ -8,6 +8,65 @@
 - **Theme:** `src/theme/themeConfig.tsx` (shared across projects)
 - **UI Testing:** Chrome tab is always open. Navigate directly -- don't launch browsers.
 
+## Session Memory (Beads)
+
+Beads provides persistent memory across sessions via git-synced issue tracking.
+
+### Session Start
+
+1. Build lightweight index: `bd list --json | jq '[.[] | {id, title, status, priority}]'`
+2. Check ready work: `bd ready --json`
+3. Check in-progress: `bd list --status in_progress --json`
+
+### Session End (Land the Plane)
+
+1. File discovered work: `bd create "description" -t bug|task|feature -p 0-4`
+2. Update worked items: `bd update <id> --status in_progress|closed`
+3. Sync to git: `bd sync`
+
+### Spawning Agents
+
+- Assign by bead ID, not prose: "Work on bd-a1b2"
+- Spawned agent fetches context: `bd show bd-a1b2 --json`
+- On completion: `bd close bd-a1b2 --reason "summary of what was done"`
+
+### Quick Reference
+
+| Action | Command |
+|--------|---------|
+| See ready work | `bd ready --json` |
+| Lightweight index | `bd list --json \| jq '[.[] \| {id, title, status, priority}]'` |
+| Full context for one bead | `bd show <id> --json` |
+| Create new bead | `bd create "title" -t bug\|task\|feature\|epic\|chore -p 0-4` |
+| Close completed | `bd close <id> --reason "summary"` |
+| Update status | `bd update <id> --status ready\|in_progress\|blocked\|closed` |
+| Add dependency | `bd dep add <id> --blocks <other-id>` |
+| Add labels | `bd label add <id> label1,label2` |
+| Filter by label | `bd list --label decision --json` |
+| Sync to git | `bd sync` |
+
+### Patterns
+
+**Index-First:** Keep orchestrator context small by treating bead lists as indexes.
+```bash
+# Lightweight index (small context footprint)
+bd list --json | jq '[.[] | {id, title, status, priority}]'
+# Full context only when needed
+bd show bd-specific-id --json
+```
+
+**Decision Tracking:** Capture architectural decisions as durable artifacts.
+```bash
+bd create "Use Zustand over Redux" -t task -p 4 -l decision,architecture \
+  --note "Rationale: Simpler API, smaller bundle, sufficient for current scale"
+```
+
+**Outcome Labels:** Track whether completed work succeeded or failed.
+```bash
+bd close <id> --reason "Shipped in PR #142"
+bd label add <id> outcome:success
+```
+
 ## Project Structure
 
 ```
@@ -158,6 +217,7 @@ When a plan is created (via `EnterPlanMode`), it **MUST** be executed with `/age
 | [docs/theme-reference.md](docs/theme-reference.md)                         | Full palette and typography tables                   |
 | [docs/data-patterns.md](docs/data-patterns.md)                             | Ponder query patterns, blockchain write templates    |
 | [docs/PROTOCOL_SPECIFICATION.md](docs/PROTOCOL_SPECIFICATION.md)           | Protocol-level domain entity design                  |
+| [docs/beads-patterns.md](docs/beads-patterns.md)                           | Beads memory patterns, decision tracking             |
 
 ## Common Mistakes
 
@@ -173,3 +233,7 @@ When a plan is created (via `EnterPlanMode`), it **MUST** be executed with `/age
 - Using `CommonButton` for blockchain actions instead of `CTAButton`
 - Using raw MUI `TextField` instead of Common Input components (`CommonSearchInput`, `CommonAmountInput`, etc.)
 - Using `as Address` to cast potentially undefined values (use `!` with enabled guards or `?? nullAddress`)
+- Discovering bugs/tasks but not filing them as beads (run `bd create` immediately)
+- Passing prose descriptions to spawned agents instead of bead IDs (use "Work on bd-a1b2")
+- Loading full bead lists into context (use `jq` to filter to lightweight index first)
+- Not syncing beads before session end (`bd sync`)
