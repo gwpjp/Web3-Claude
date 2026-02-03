@@ -1,19 +1,35 @@
-# Claude Code Configuration Template
+# Web3-Claude Configuration Template
 
-This folder contains a reusable Claude Code configuration for React + Web3 + React Query projects.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-> **Using this template?** See [docs/portability-guide.md](docs/portability-guide.md) for detailed instructions on what's reusable, what needs parameterization, and what must be regenerated.
+A comprehensive, reusable Claude Code configuration template for React + Web3 + React Query projects. This template provides specialized agents, workflows, and documentation to accelerate Web3 application development with AI assistance.
 
-## Files Overview
+## 🚀 Quick Start
+
+1. Copy the `.claude` folder to your project root
+2. Follow the [portability guide](.claude/docs/portability-guide.md) to customize for your project
+3. Run `/skill-sync all` to regenerate project-specific files
+
+> **Using this template?** See [.claude/docs/portability-guide.md](.claude/docs/portability-guide.md) for detailed instructions on what's reusable, what needs parameterization, and what must be regenerated.
+
+## ⚠️ Security Notice
+
+**Before using in production:**
+- Never commit API keys, secrets, or private keys
+- Review `.gitignore` to ensure sensitive files are excluded
+- Read [SECURITY.md](SECURITY.md) for security best practices
+- Use environment variables for all sensitive configuration
+
+## 📁 Repository Structure
 
 | File / Directory | Purpose                                                      |
 | ---------------- | ------------------------------------------------------------ |
-| `CLAUDE.md`      | Project instructions loaded automatically every conversation |
-| `settings.json`  | Pre-allowed permissions to reduce prompts                    |
-| `hooks.json`     | Automatic actions (currently: Prettier on file save)         |
-| `commands/`      | Simple slash commands for common workflows                   |
-| `skills/`        | Specialized agents and complex workflow skills               |
-| `docs/`          | Shared reference documents (single source of truth)          |
+| `.claude/CLAUDE.md`      | Project instructions loaded automatically every conversation |
+| `.claude/settings.json`  | Pre-allowed permissions to reduce prompts                    |
+| `.claude/hooks.json`     | Automatic actions (currently: Prettier on file save)         |
+| `.claude/commands/`      | Simple slash commands for common workflows                   |
+| `.claude/skills/`        | Specialized agents and complex workflow skills               |
+| `.claude/docs/`          | Shared reference documents (single source of truth)          |
 
 ---
 
@@ -155,7 +171,7 @@ Replace entity placeholders with your domain entities.
 
 Run `/skill-sync all` after copying the skill-sync folder — it handles all of these:
 
-- `docs/theme-reference.md` — from `themeConfig.tsx`
+- `.claude/docs/theme-reference.md` — from `themeConfig.tsx`
 - `ponder-schema-specialist/schema-reference.md` — from `ponder.schema.ts`
 - `wagmi-specialist/hook-reference.md` — from `src/hooks/blockchain/`
 - `wagmi-specialist/contracts-reference.md` — from `generated.ts`
@@ -189,10 +205,34 @@ entities, just different theme and pages.
 
 ### Full Guide
 
-See **[docs/portability-guide.md](docs/portability-guide.md)** for:
+See **[.claude/docs/portability-guide.md](.claude/docs/portability-guide.md)** for:
 
 - Complete file-by-file classification
 - Step-by-step setup instructions
 - Same-family setup (shared indexer/contracts)
 - Architectural patterns reference
 - Setup checklist
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to contribute to this project.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🔒 Security
+
+Please review our [Security Policy](SECURITY.md) before using this template in production. Never commit secrets, API keys, or private keys to your repository.
+
+## 💡 Support
+
+- 📚 Read the [documentation](.claude/docs/)
+- 🐛 Report bugs via [GitHub Issues](https://github.com/gwpjp/Web3-Claude/issues)
+- 💬 Share your experience and improvements
+
+---
+
+**Note**: This is a configuration template for Claude Code. It does not contain application code, but rather AI agent configurations and workflows to assist in Web3 development.
