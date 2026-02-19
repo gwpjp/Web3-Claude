@@ -1,6 +1,6 @@
 {
   "$schema": "Manifest of .claude files for porting to new projects",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "targetStack": {
     "framework": "React 18+",
     "language": "TypeScript",
@@ -23,44 +23,49 @@
       "skills": [
         "skills/verify/SKILL.md",
         "skills/verify-app/SKILL.md",
-        "skills/code-simplifier/SKILL.md",
         "skills/skill-sync/SKILL.md",
         "skills/skill-sync/sync-targets.md",
         "skills/skills-creator/SKILL.md",
         "skills/ralph-loop/SKILL.md",
         "skills/ralph-loop/guardrails.md",
-        "skills/ui-designer/SKILL.md",
-        "skills/theme-ui-specialist/SKILL.md",
-        "skills/react-specialist/SKILL.md",
-        "skills/design-dialogue/SKILL.md",
-        "skills/design-dialogue/dialogue-format.md",
-        "skills/ui-design-specialist/SKILL.md",
-        "skills/ui-design-specialist/anti-slop-patterns.md",
-        "skills/ui-design-jony-ive/SKILL.md",
-        "skills/ui-design-jony-ive/design-philosophy.md",
-        "skills/wagmi-specialist/SKILL.md",
-        "skills/react-query-specialist/SKILL.md",
-        "skills/react-query-specialist/best-practices.md",
-        "skills/ponder-schema-specialist/SKILL.md",
-        "skills/typescript-specialist/SKILL.md",
-        "skills/ui-refactor-specialist/SKILL.md",
-        "skills/code-refactor-specialist/SKILL.md",
-        "skills/types-refactor-specialist/SKILL.md",
-        "skills/visual-qa/SKILL.md",
-        "skills/visual-qa-chrome-profiler/SKILL.md",
-        "skills/visual-qa-lighthouse/SKILL.md",
-        "skills/visual-qa-react-devtools-profiler/SKILL.md",
-        "skills/visual-qa-react-analyzer/SKILL.md",
-        "skills/visual-qa-react-analyzer/anti-patterns.md",
-        "skills/accessibility-auditor/SKILL.md",
-        "skills/responsive-tester/SKILL.md",
-        "skills/performance-auditor/SKILL.md",
         "skills/analyze-theme/SKILL.md",
         "skills/new-component/SKILL.md",
         "skills/new-hook/SKILL.md",
-        "skills/qa-prerequisites.md",
         "skills/monitor/SKILL.md",
         "skills/monitor/patterns.md"
+      ],
+      "agents": [
+        "agents/domain/ui-designer.md",
+        "agents/domain/design-dialogue.md",
+        "agents/domain/theme-ui-specialist.md",
+        "agents/domain/react-specialist.md",
+        "agents/domain/web3-implementer.md",
+        "agents/domain/wagmi-specialist.md",
+        "agents/domain/ponder-schema-specialist.md",
+        "agents/domain/react-query-specialist.md",
+        "agents/domain/typescript-specialist.md",
+        "agents/domain/code-refactor-specialist.md",
+        "agents/design/ui-design-specialist.md",
+        "agents/design/ui-design-jony-ive.md",
+        "agents/qa/visual-qa.md",
+        "agents/qa/visual-qa-chrome-profiler.md",
+        "agents/qa/visual-qa-lighthouse.md",
+        "agents/qa/visual-qa-react-devtools-profiler.md",
+        "agents/qa/visual-qa-react-analyzer.md",
+        "agents/qa/accessibility-auditor.md",
+        "agents/qa/responsive-tester.md",
+        "agents/qa/performance-auditor.md",
+        "agents/qa/form-edge-case-tester.md",
+        "agents/refactor/code-simplifier.md",
+        "agents/refactor/ui-refactor-specialist.md",
+        "agents/refactor/types-refactor-specialist.md"
+      ],
+      "knowledge": [
+        "knowledge/design/dialogue-format.md",
+        "knowledge/design/anti-slop-patterns.md",
+        "knowledge/design/design-philosophy.md",
+        "knowledge/qa/qa-prerequisites.md",
+        "knowledge/qa/react-anti-patterns.md"
       ]
     },
     "parameterize": {
@@ -71,11 +76,11 @@
         "docs/project-rules.md",
         "docs/component-reference.md",
         "skills/agent-orchestrator/SKILL.md",
-        "skills/agent-orchestrator/agent-registry.md",
-        "skills/web3-implementer/SKILL.md",
-        "skills/web3-implementer/hook-patterns.md",
-        "skills/typescript-specialist/project-config.json",
-        "skills/form-edge-case-tester/SKILL.md"
+        "knowledge/orchestrator/agent-registry.md",
+        "agents/domain/web3-implementer.md",
+        "knowledge/domain/hook-patterns.md",
+        "knowledge/domain/project-config.json",
+        "agents/qa/form-edge-case-tester.md"
       ]
     },
     "regenerate": {
@@ -87,27 +92,27 @@
           "instructions": "Extract palette colors and typography variants into markdown tables"
         },
         {
-          "target": "skills/ponder-schema-specialist/schema-reference.md",
+          "target": "knowledge/domain/schema-reference.md",
           "source": "ponder.schema.ts or src/services/ponder/ponder.schema.ts",
           "instructions": "Run `npx tsx scripts/generate-schema-reference.ts` if script exists, otherwise extract tables, columns, types, indexes, relations"
         },
         {
-          "target": "skills/wagmi-specialist/hook-reference.md",
+          "target": "knowledge/domain/hook-reference.md",
           "source": "src/hooks/blockchain/",
           "instructions": "Scan directory for all hooks, categorize by type (read, write, transform), document params and returns"
         },
         {
-          "target": "skills/wagmi-specialist/contracts-reference.md",
+          "target": "knowledge/domain/contracts-reference.md",
           "source": "src/services/contracts/generated.ts",
           "instructions": "Scan for ABI exports, categorize by domain, document key functions and hook-to-contract mapping"
         },
         {
-          "target": "skills/web3-implementer/ponder-reference.md",
+          "target": "knowledge/domain/ponder-reference.md",
           "source": "src/hooks/ponder/",
           "instructions": "Catalog all ponder hooks with their query patterns"
         },
         {
-          "target": "skills/typescript-specialist/type-index.json",
+          "target": "knowledge/domain/type-index.json",
           "source": "src/types/",
           "instructions": "Index all exported interfaces, types, and transform functions"
         }
@@ -117,11 +122,11 @@
       "description": "Must be created new for each project",
       "files": [
         {
-          "target": "skills/routes.json",
+          "target": "agents/qa/routes.json",
           "instructions": "Define all app routes with QA focus areas for each page"
         },
         {
-          "target": "skills/ui-designer/design-patterns.md",
+          "target": "knowledge/domain/design-patterns.md",
           "instructions": "Document page layouts, card sections, form patterns specific to this project"
         },
         {
@@ -134,6 +139,10 @@
         }
       ]
     }
+  },
+  "scripts": {
+    "description": "Utility scripts for DeFi protocol data",
+    "files": ["scripts/defillama.mjs"]
   },
   "validation": {
     "requiredAfterSetup": [

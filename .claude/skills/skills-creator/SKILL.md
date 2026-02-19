@@ -59,7 +59,7 @@ Before creating the skill, review existing skills to:
 **Always read these files:**
 
 - `.claude/skills/agent-orchestrator/SKILL.md` -- Agent hierarchy tree
-- `.claude/skills/agent-orchestrator/agent-registry.md` -- Full agent profiles, knowledge files, handoff points
+- `.claude/knowledge/orchestrator/agent-registry.md` -- Full agent profiles, knowledge files, handoff points
 - `.claude/docs/project-rules.md` -- Check if the rule/convention already exists here before embedding in a new skill
 - `.claude/docs/component-reference.md` -- Check if component guidance already exists here
 
@@ -78,7 +78,7 @@ Read relevant existing skills in `.claude/commands/` and `.claude/skills/` to un
 - **Creation**: `skills/new-component/`, `skills/new-hook/` -- Parse arguments, follow templates, create files
 - **Analysis**: `skills/analyze-theme/` -- Exhaustive search, zero-tolerance enforcement, violation reports
 - **Workflow**: `commands/update-contracts.md`, `commands/commit-push-pr.md` -- Multi-step with user interaction
-- **Subagent**: `skills/code-simplifier/`, `skills/verify-app/` -- Autonomous execution (fork context)
+- **Subagent**: `agents/refactor/code-simplifier.md`, `skills/verify-app/` -- Autonomous execution (fork context)
 
 ### Phase 3: Design the Skill
 
@@ -179,7 +179,7 @@ New skill created?
 
 ### When Creating a New Skill
 
-1. **Read** `.claude/skills/agent-orchestrator/agent-registry.md` to understand the current hierarchy
+1. **Read** `.claude/knowledge/orchestrator/agent-registry.md` to understand the current hierarchy
 2. **Determine placement:**
    - **Sub-agent** (e.g., under `/ui-designer` or `/web3-implementer`): Add to parent's sub-agents list, add agent profile, add to hierarchy tree, add handoff point
    - **New top-level agent**: Add to orchestrator's hierarchy tree, add agent profile, add to task classification table
@@ -189,7 +189,7 @@ New skill created?
    **`.claude/skills/agent-orchestrator/SKILL.md`:**
    - Update the hierarchy tree diagram (the ASCII tree under "Agent Hierarchy")
 
-   **`.claude/skills/agent-orchestrator/agent-registry.md`:**
+   **`.claude/knowledge/orchestrator/agent-registry.md`:**
    - Update the hierarchy tree diagram at the top
    - Add a new agent profile section with: Role, Owns, Knowledge files, When to invoke, Constraints (if any)
    - Update the parent agent's "Sub-agents" list

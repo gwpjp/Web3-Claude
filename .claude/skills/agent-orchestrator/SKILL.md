@@ -12,7 +12,7 @@ You are the **top-level orchestration agent** for this project. Every non-trivia
 
 When invoked:
 
-1. Read `.claude/skills/agent-orchestrator/agent-registry.md` for the full agent hierarchy, capabilities, and knowledge file inventory
+1. Read `.claude/knowledge/orchestrator/agent-registry.md` for the full agent hierarchy, capabilities, and knowledge file inventory
 2. Understand the task requirements and classify them by domain
 3. Determine which agents are needed and in what order
 4. Identify if any knowledge files need updating after the work completes
@@ -97,36 +97,36 @@ Many tasks span multiple domains. This is where you add the most value:
 
 ### Knowledge File Inventory
 
-| File                                           | Owner                                                 | Update When                                                                          |
-| ---------------------------------------------- | ----------------------------------------------------- | ------------------------------------------------------------------------------------ |
-| `typescript-specialist/type-index.json`        | `/typescript-specialist`                              | Any change to `src/types/`                                                           |
-| `typescript-specialist/project-config.json`    | `/typescript-specialist`                              | Project config/convention changes                                                    |
-| `web3-implementer/ponder-reference.md`         | `/web3-implementer`                                   | New ponder tables, hooks, or schema changes                                          |
-| `web3-implementer/hook-patterns.md`            | `/web3-implementer`                                   | New hook creation patterns established                                               |
-| `ponder-schema-specialist/schema-reference.md` | `/ponder-schema-specialist` (auto-generated)          | Run `npx tsx scripts/generate-schema-reference.ts` after any ponder.schema.ts change |
-| `wagmi-specialist/hook-reference.md`           | `/wagmi-specialist`                                   | New blockchain hooks added/removed                                                   |
-| `docs/project-rules.md`                        | `/agent-orchestrator`                                 | Any project convention change                                                        |
-| `docs/component-reference.md`                  | `/react-specialist` + `/theme-ui-specialist` (shared) | Common component API changes                                                         |
-| `ui-designer/design-patterns.md`               | `/ui-designer`                                        | New UI patterns established                                                          |
-| `react-query-specialist/best-practices.md`     | `/react-query-specialist`                             | Query pattern changes                                                                |
+| File                                            | Owner                                                 | Update When                                                                          |
+| ----------------------------------------------- | ----------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| `knowledge/domain/type-index.json`              | `/typescript-specialist`                              | Any change to `src/types/`                                                           |
+| `knowledge/domain/project-config.json`          | `/typescript-specialist`                              | Project config/convention changes                                                    |
+| `knowledge/domain/ponder-reference.md`          | `/web3-implementer`                                   | New ponder tables, hooks, or schema changes                                          |
+| `knowledge/domain/hook-patterns.md`             | `/web3-implementer`                                   | New hook creation patterns established                                               |
+| `knowledge/domain/schema-reference.md`          | `/ponder-schema-specialist` (auto-generated)          | Run `npx tsx scripts/generate-schema-reference.ts` after any ponder.schema.ts change |
+| `knowledge/domain/hook-reference.md`            | `/wagmi-specialist`                                   | New blockchain hooks added/removed                                                   |
+| `docs/project-rules.md`                         | `/agent-orchestrator`                                 | Any project convention change                                                        |
+| `docs/component-reference.md`                   | `/react-specialist` + `/theme-ui-specialist` (shared) | Common component API changes                                                         |
+| `knowledge/domain/design-patterns.md`           | `/ui-designer`                                        | New UI patterns established                                                          |
+| `knowledge/domain/react-query-best-practices.md`| `/react-query-specialist`                             | Query pattern changes                                                                |
 
 ### Update Rules
 
 1. **After creating new hooks** in `src/hooks/blockchain/` or `src/hooks/ponder/`:
-   - Update `wagmi-specialist/hook-reference.md` (add to the hook catalog)
-   - Update `web3-implementer/ponder-reference.md` (if new ponder hooks)
+   - Update `knowledge/domain/hook-reference.md` (add to the hook catalog)
+   - Update `knowledge/domain/ponder-reference.md` (if new ponder hooks)
 
 2. **After modifying `src/types/`**:
-   - Update `typescript-specialist/type-index.json` (add/update type entries)
+   - Update `knowledge/domain/type-index.json` (add/update type entries)
 
 3. **After creating/modifying Common components**:
    - Update `docs/component-reference.md` (shared reference)
 
 4. **After establishing new UI patterns**:
-   - Update `ui-designer/design-patterns.md`
+   - Update `knowledge/domain/design-patterns.md`
 
 5. **After changing query strategies**:
-   - Update `react-query-specialist/best-practices.md`
+   - Update `knowledge/domain/react-query-best-practices.md`
 
 ### Update Process
 
