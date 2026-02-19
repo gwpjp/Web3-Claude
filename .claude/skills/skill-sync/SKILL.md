@@ -23,14 +23,14 @@ You are the **.claude folder synchronization agent**. Your job is to keep the kn
 
 | Knowledge File                                 | Source                                | Trigger                             |
 | ---------------------------------------------- | ------------------------------------- | ----------------------------------- |
-| `ponder-schema-specialist/schema-reference.md` | `ponder.schema.ts`                    | Schema table/column/index changes   |
-| `wagmi-specialist/hook-reference.md`           | `src/hooks/blockchain/`               | Hook added/removed/renamed          |
-| `wagmi-specialist/contracts-reference.md`      | `src/services/contracts/generated.ts` | Contract ABI added/removed/modified |
-| `web3-implementer/ponder-reference.md`         | `src/hooks/ponder/`                   | Ponder hook added/removed           |
-| `typescript-specialist/type-index.json`        | `src/types/`                          | Type added/removed/modified         |
-| `.claude/docs/theme-reference.md`              | `src/theme/themeConfig.tsx`           | Palette/typography changes          |
-| `.claude/docs/component-reference.md`          | `src/components/Common/`              | Common component API changes        |
-| `skills/routes.json`                           | Router config / `src/pages/`          | Page added/removed                  |
+| `knowledge/domain/schema-reference.md`       | `ponder.schema.ts`                    | Schema table/column/index changes   |
+| `knowledge/domain/hook-reference.md`         | `src/hooks/blockchain/`               | Hook added/removed/renamed          |
+| `knowledge/domain/contracts-reference.md`    | `src/services/contracts/generated.ts` | Contract ABI added/removed/modified |
+| `knowledge/domain/ponder-reference.md`       | `src/hooks/ponder/`                   | Ponder hook added/removed           |
+| `knowledge/domain/type-index.json`           | `src/types/`                          | Type added/removed/modified         |
+| `docs/theme-reference.md`                    | `src/theme/themeConfig.tsx`           | Palette/typography changes          |
+| `docs/component-reference.md`                | `src/components/Common/`              | Common component API changes        |
+| `agents/qa/routes.json`                      | Router config / `src/pages/`          | Page added/removed                  |
 
 ## Workflow
 
@@ -116,7 +116,7 @@ Options:
 
 For each file to sync:
 
-#### Schema Reference (`ponder-schema-specialist/schema-reference.md`)
+#### Schema Reference (`knowledge/domain/schema-reference.md`)
 
 If a generation script exists:
 
@@ -133,7 +133,7 @@ Otherwise, read `ponder.schema.ts` (or `src/services/ponder/ponder.schema.ts`) a
 
 Format as markdown tables matching the existing schema-reference.md structure.
 
-#### Hook Reference (`wagmi-specialist/hook-reference.md`)
+#### Hook Reference (`knowledge/domain/hook-reference.md`)
 
 Scan `src/hooks/blockchain/` and extract:
 
@@ -155,7 +155,7 @@ Scan `src/hooks/blockchain/` and extract:
 
 Format as categorized tables matching existing hook-reference.md structure.
 
-#### Ponder Reference (`web3-implementer/ponder-reference.md`)
+#### Ponder Reference (`knowledge/domain/ponder-reference.md`)
 
 Scan `src/hooks/ponder/` and extract:
 
@@ -168,7 +168,7 @@ Scan `src/hooks/ponder/` and extract:
 
 Format as a hook catalog with query patterns.
 
-#### Type Index (`typescript-specialist/type-index.json`)
+#### Type Index (`knowledge/domain/type-index.json`)
 
 Scan `src/types/` and extract:
 
@@ -211,7 +211,7 @@ Scan `src/components/Common/` and for each component:
 
 Format as the existing component-reference.md structure (grouped by category).
 
-#### Routes Config (`skills/routes.json`)
+#### Routes Config (`agents/qa/routes.json`)
 
 Scan `src/pages/` and router configuration:
 

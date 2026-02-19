@@ -6,7 +6,7 @@ Detailed documentation of each knowledge file that requires sync, including the 
 
 ## 1. Schema Reference
 
-**Target:** `.claude/skills/ponder-schema-specialist/schema-reference.md`
+**Target:** `.claude/knowledge/domain/schema-reference.md`
 **Source:** `ponder.schema.ts` or `src/services/ponder/ponder.schema.ts`
 **Trigger:** Any change to ponder schema (tables, columns, indexes, relations)
 
@@ -66,7 +66,7 @@ npx tsx scripts/generate-schema-reference.ts
 
 ## 2. Wagmi Hook Reference
 
-**Target:** `.claude/skills/wagmi-specialist/hook-reference.md`
+**Target:** `.claude/knowledge/domain/hook-reference.md`
 **Source:** `src/hooks/blockchain/`
 **Trigger:** Hook added, removed, renamed, or signature changed
 
@@ -135,7 +135,7 @@ npx tsx scripts/generate-schema-reference.ts
 
 ## 3. Ponder Hook Reference
 
-**Target:** `.claude/skills/web3-implementer/ponder-reference.md`
+**Target:** `.claude/knowledge/domain/ponder-reference.md`
 **Source:** `src/hooks/ponder/`
 **Trigger:** Ponder hook added, removed, or query pattern changed
 
@@ -177,7 +177,7 @@ export function usePonderEntity(entityAddress?: string) {
 
 ## 4. Type Index
 
-**Target:** `.claude/skills/typescript-specialist/type-index.json`
+**Target:** `.claude/knowledge/domain/type-index.json`
 **Source:** `src/types/`
 **Trigger:** Type added, removed, or significantly modified
 
@@ -371,7 +371,7 @@ interface Props extends ButtonProps {
 
 ## 7. Routes Config
 
-**Target:** `.claude/skills/routes.json`
+**Target:** `.claude/agents/qa/routes.json`
 **Source:** Router configuration + `src/pages/`
 **Trigger:** Page added, removed, or route path changed
 
@@ -414,7 +414,7 @@ interface Props extends ButtonProps {
 
 ## 8. Contracts Reference
 
-**Target:** `.claude/skills/wagmi-specialist/contracts-reference.md`
+**Target:** `.claude/knowledge/domain/contracts-reference.md`
 **Source:** `src/services/contracts/generated.ts`
 **Trigger:** Contract ABI added, removed, or function signatures changed
 

@@ -85,6 +85,24 @@ bd label add <id> outcome:success
 ## Project Structure
 
 ```
+.claude/
+├── agents/         # Fork-context agents (auto-delegated by Claude)
+│   ├── domain/     # Domain orchestrators + specialists (10)
+│   ├── design/     # Design critic agents (2)
+│   ├── qa/         # QA and testing agents (9 + routes.json)
+│   └── refactor/   # Refactoring agents (3)
+├── knowledge/      # Shared knowledge files
+│   ├── domain/     # Domain knowledge (hooks, contracts, schema, types)
+│   ├── design/     # Design philosophy, dialogue format
+│   ├── qa/         # QA prerequisites, React anti-patterns
+│   └── orchestrator/ # Agent registry
+├── scripts/        # Utility scripts (defillama.mjs)
+├── skills/         # User-invocable skills (~10)
+├── commands/       # Simple commands
+└── docs/           # Documentation
+```
+
+```
 src/
 ├── components/     # React components (use subfolders for groups)
 ├── hooks/          # Custom hooks
@@ -176,23 +194,28 @@ Always verify before completing a task:
 | `/update-contracts`  | Update contract ABIs and addresses  |
 | `/verify-ui`         | UI verification checklist           |
 
-**Skills** (complex, domain-aware):
+**Skills** (user-invocable):
 
-| Skill                    | Purpose                                                 |
+| Skill            | Purpose                                                           |
+| ---------------- | ----------------------------------------------------------------- |
+| `/verify`        | Run typecheck, lint, prettier (auto-fix), build                   |
+| `/analyze-theme` | Find theme violations (hardcoded colors, fonts)                   |
+| `/verify-app`    | Comprehensive verification with code quality + security           |
+| `/skill-sync`    | Sync .claude knowledge files with codebase                        |
+| `/new-component` | Scaffold new React component                                      |
+| `/new-hook`      | Scaffold new custom hook                                          |
+| `/monitor`       | Safety monitor -- catches destructive commands, malicious packages |
+
+**Agents** (auto-delegated by Claude, invoked via agent-orchestrator):
+
+| Agent                    | Purpose                                                 |
 | ------------------------ | ------------------------------------------------------- |
-| `/verify`                | Run typecheck, lint, prettier (auto-fix), build         |
-| `/analyze-theme`         | Find theme violations (hardcoded colors, fonts)         |
-| `/verify-app`            | Comprehensive verification with code quality + security |
-| `/code-simplifier`       | Post-implementation cleanup and simplification          |
-| `/skill-sync`            | Sync .claude knowledge files with codebase              |
-| `/new-component`         | Scaffold new React component                            |
-| `/new-hook`              | Scaffold new custom hook                                |
-| `/visual-qa`             | Visual QA in Chrome -- bugs, console errors, network    |
-| `/accessibility-auditor` | A11y audit -- ARIA labels, keyboard nav, focus mgmt     |
-| `/responsive-tester`     | Test app at mobile/tablet/desktop breakpoints           |
-| `/performance-auditor`   | Measure load times, network efficiency, CWV             |
-| `/form-edge-case-tester` | Test form validation, edge cases, error recovery        |
-| `/monitor`               | Safety monitor -- catches destructive commands, malicious packages |
+| `visual-qa`              | Visual QA in Chrome -- bugs, console errors, network    |
+| `accessibility-auditor`  | A11y audit -- ARIA labels, keyboard nav, focus mgmt     |
+| `responsive-tester`      | Test app at mobile/tablet/desktop breakpoints           |
+| `performance-auditor`    | Measure load times, network efficiency, CWV             |
+| `form-edge-case-tester`  | Test form validation, edge cases, error recovery        |
+| `code-simplifier`        | Post-implementation cleanup and simplification          |
 
 ## Agent Orchestrator (CRITICAL)
 
@@ -202,14 +225,22 @@ The agent-orchestrator provides access to the full skill hierarchy:
 
 ```
 /agent-orchestrator
-├── /ui-designer .............. All UI changes, layout, visual design
-│   ├── /theme-ui-specialist .. Palette, typography, styled(), MUI
-│   ├── /react-specialist ..... Component logic, hooks, state
-│   └── /visual-qa ............ Chrome visual QA (after changes)
-├── /web3-implementer ......... All blockchain + ponder data work
-│   ├── /wagmi-specialist ..... Contract reads/writes, tx lifecycle
-│   └── /react-query-specialist Cache strategy, query keys
-└── /typescript-specialist .... Advanced types, generics (shared)
+├── ui-designer .............. All UI changes, layout, visual design (agent)
+│   ├── design-dialogue ...... Design critic dialogue (agent)
+│   │   ├── ui-design-specialist Anti-slop critic (agent)
+│   │   └── ui-design-jony-ive  Senior design consultant (agent)
+│   ├── theme-ui-specialist ... Palette, typography, styled(), MUI (agent)
+│   ├── react-specialist ..... Component logic, hooks, state (agent)
+│   ├── visual-qa ............ Chrome visual QA (after changes) (agent)
+│   └── ui-refactor-specialist Auto cleanup after UI work (agent)
+├── web3-implementer ......... All blockchain + ponder data work (agent)
+│   ├── ponder-schema-specialist Schema reference (agent)
+│   ├── wagmi-specialist ..... Contract reads/writes, tx lifecycle (agent)
+│   ├── react-query-specialist Cache strategy, query keys (agent)
+│   └── code-refactor-specialist Auto cleanup after hook work (agent)
+├── typescript-specialist .... Advanced types, generics (shared agent)
+│   └── types-refactor-specialist Auto cleanup after type work (agent)
+└── /ralph-loop ............... Autonomous task loops (user-invoked)
 ```
 
 **Why this matters:** Without `/agent-orchestrator` loaded, Claude falls back to generic `Task` agents (`general-purpose`, `Explore`) which lack domain expertise, theme knowledge, and project conventions.

@@ -57,101 +57,118 @@ This guide assumes the new project uses:
 | `data-patterns.md`         | **COPY**             | Patterns are generic                                    |
 | `PROTOCOL_SPECIFICATION.md`| **PROJECT-SPECIFIC** | Domain knowledge, delete or replace                     |
 
-### Skills (`skills/`)
+### Agents (`agents/`)
 
-#### Agent Orchestration (PARAMETERIZED)
+#### Domain Agents (`agents/domain/`) - MOSTLY COPY
+
+| Agent                                  | Classification    | Notes                          |
+| -------------------------------------- | ----------------- | ------------------------------ |
+| `agents/domain/ui-designer.md`         | **COPY**          | Design patterns universal      |
+| `agents/domain/theme-ui-specialist.md` | **COPY**          | MUI theming patterns universal |
+| `agents/domain/react-specialist.md`    | **COPY**          | React patterns universal       |
+| `agents/domain/design-dialogue.md`     | **COPY**          | Dialogue pattern universal     |
+| `agents/domain/web3-implementer.md`    | **PARAMETERIZED** | Update table names in examples |
+| `agents/domain/wagmi-specialist.md`    | **COPY**          | wagmi/viem patterns universal  |
+| `agents/domain/ponder-schema-specialist.md` | **COPY**     | Pattern universal              |
+| `agents/domain/react-query-specialist.md`   | **COPY**     | Query patterns universal       |
+| `agents/domain/typescript-specialist.md`    | **COPY**     | TS patterns universal          |
+| `agents/domain/code-refactor-specialist.md` | **COPY**     | Refactoring patterns universal |
+
+#### Design Agents (`agents/design/`) - ALL COPY
+
+| Agent                                        | Classification | Notes                        |
+| -------------------------------------------- | -------------- | ---------------------------- |
+| `agents/design/ui-design-specialist.md`      | **COPY**       | Anti-slop patterns universal |
+| `agents/design/ui-design-jony-ive.md`        | **COPY**       | Philosophy universal         |
+
+#### QA Agents (`agents/qa/`) - ALL COPY
+
+All QA agents are **COPY** - they use Chrome/browser APIs, not project-specific code:
+
+- `agents/qa/visual-qa.md`
+- `agents/qa/visual-qa-chrome-profiler.md`
+- `agents/qa/visual-qa-lighthouse.md`
+- `agents/qa/visual-qa-react-devtools-profiler.md`
+- `agents/qa/visual-qa-react-analyzer.md`
+- `agents/qa/accessibility-auditor.md`
+- `agents/qa/responsive-tester.md`
+- `agents/qa/performance-auditor.md`
+- `agents/qa/form-edge-case-tester.md` (update form field names)
+
+**Exception:** `agents/qa/routes.json` is **PROJECT-SPECIFIC** - defines pages to test.
+
+#### Refactor Agents (`agents/refactor/`) - ALL COPY
+
+All refactoring agents are **COPY** - patterns are universal:
+
+- `agents/refactor/ui-refactor-specialist.md`
+- `agents/refactor/code-simplifier.md`
+- `agents/refactor/types-refactor-specialist.md`
+
+### Knowledge Files (`knowledge/`)
+
+#### Domain Knowledge (`knowledge/domain/`)
+
+| File                                         | Classification    | Notes                                 |
+| -------------------------------------------- | ----------------- | ------------------------------------- |
+| `knowledge/domain/hook-patterns.md`          | **PARAMETERIZED** | Templates generic, update table names |
+| `knowledge/domain/ponder-reference.md`       | **REGENERATE**    | Catalog actual ponder hooks           |
+| `knowledge/domain/hook-reference.md`         | **REGENERATE**    | Catalog actual blockchain hooks       |
+| `knowledge/domain/contracts-reference.md`    | **REGENERATE**    | Summary of generated.ts ABIs         |
+| `knowledge/domain/schema-reference.md`       | **REGENERATE**    | From ponder.schema.ts                 |
+| `knowledge/domain/react-query-best-practices.md` | **COPY**     | Best practices universal              |
+| `knowledge/domain/type-index.json`           | **REGENERATE**    | Index actual types                    |
+| `knowledge/domain/project-config.json`       | **PARAMETERIZED** | Update paths if different             |
+| `knowledge/domain/design-patterns.md`        | **PROJECT-SPECIFIC** | Contains actual page layouts       |
+
+#### Design Knowledge (`knowledge/design/`) - ALL COPY
+
+| File                                         | Classification | Notes              |
+| -------------------------------------------- | -------------- | ------------------ |
+| `knowledge/design/dialogue-format.md`        | **COPY**       | Format universal   |
+| `knowledge/design/anti-slop-patterns.md`     | **COPY**       | Patterns universal |
+| `knowledge/design/design-philosophy.md`      | **COPY**       | Philosophy universal |
+
+#### QA Knowledge (`knowledge/qa/`) - ALL COPY
+
+| File                                     | Classification | Notes                  |
+| ---------------------------------------- | -------------- | ---------------------- |
+| `knowledge/qa/qa-prerequisites.md`       | **COPY**       | Port assumption universal |
+| `knowledge/qa/react-anti-patterns.md`    | **COPY**       | Patterns universal     |
+
+#### Orchestrator Knowledge (`knowledge/orchestrator/`)
+
+| File                                         | Classification    | Notes                               |
+| -------------------------------------------- | ----------------- | ----------------------------------- |
+| `knowledge/orchestrator/agent-registry.md`   | **PARAMETERIZED** | Update entity names, keep structure |
+
+### Skills (`skills/`) - User-Invocable
 
 | Skill                                  | Classification    | Notes                               |
 | -------------------------------------- | ----------------- | ----------------------------------- |
-| `agent-orchestrator/SKILL.md`          | **PARAMETERIZED** | Update entity names in examples     |
-| `agent-orchestrator/agent-registry.md` | **PARAMETERIZED** | Update entity names, keep structure |
+| `skills/agent-orchestrator/SKILL.md`   | **PARAMETERIZED** | Update entity names in examples     |
+| `skills/verify/SKILL.md`              | **COPY**          | Verification universal              |
+| `skills/verify-app/SKILL.md`          | **COPY**          | Comprehensive verification          |
+| `skills/skill-sync/SKILL.md`          | **COPY**          | Sync universal for stack            |
+| `skills/skill-sync/sync-targets.md`   | **COPY**          | Regeneration instructions           |
+| `skills/skills-creator/SKILL.md`      | **COPY**          | Skill creation universal            |
+| `skills/ralph-loop/SKILL.md`          | **COPY**          | Autonomous loop universal           |
+| `skills/ralph-loop/guardrails.md`     | **COPY**          | Guardrails universal                |
+| `skills/monitor/SKILL.md`             | **COPY**          | Safety monitor universal            |
+| `skills/monitor/patterns.md`          | **COPY**          | Dangerous patterns universal        |
+| `skills/analyze-theme/SKILL.md`       | **COPY**          | MUI theme auditor universal         |
+| `skills/new-component/SKILL.md`       | **COPY**          | React + MUI scaffold universal      |
+| `skills/new-hook/SKILL.md`            | **COPY**          | Hook scaffold universal             |
 
-#### UI Domain (MOSTLY COPY)
+### Scripts (`scripts/`)
 
-| Skill                                        | Classification       | Notes                          |
-| -------------------------------------------- | -------------------- | ------------------------------ |
-| `ui-designer/SKILL.md`                       | **COPY**             | Design patterns universal      |
-| `ui-designer/design-patterns.md`             | **PROJECT-SPECIFIC** | Contains actual page layouts   |
-| `theme-ui-specialist/SKILL.md`               | **COPY**             | MUI theming patterns universal |
-| `react-specialist/SKILL.md`                  | **COPY**             | React patterns universal       |
-| `design-dialogue/SKILL.md`                   | **COPY**             | Dialogue pattern universal     |
-| `design-dialogue/dialogue-format.md`         | **COPY**             | Format universal               |
-| `ui-design-specialist/SKILL.md`              | **COPY**             | Anti-slop patterns universal   |
-| `ui-design-specialist/anti-slop-patterns.md` | **COPY**             | Patterns universal             |
-| `ui-design-jony-ive/SKILL.md`                | **COPY**             | Philosophy universal           |
-| `ui-design-jony-ive/design-philosophy.md`    | **COPY**             | Philosophy universal           |
-
-#### Web3 Domain (PARAMETERIZED)
-
-| Skill                                          | Classification    | Notes                                 |
-| ---------------------------------------------- | ----------------- | ------------------------------------- |
-| `web3-implementer/SKILL.md`                    | **PARAMETERIZED** | Update table names in examples        |
-| `web3-implementer/hook-patterns.md`            | **PARAMETERIZED** | Templates generic, update table names |
-| `web3-implementer/ponder-reference.md`         | **REGENERATE**    | Catalog actual ponder hooks           |
-| `wagmi-specialist/SKILL.md`                    | **COPY**          | wagmi/viem patterns universal         |
-| `wagmi-specialist/hook-reference.md`           | **REGENERATE**    | Catalog actual blockchain hooks       |
-| `wagmi-specialist/contracts-reference.md`      | **REGENERATE**    | Summary of generated.ts ABIs          |
-| `react-query-specialist/SKILL.md`              | **COPY**          | Query patterns universal              |
-| `react-query-specialist/best-practices.md`     | **COPY**          | Best practices universal              |
-| `ponder-schema-specialist/SKILL.md`            | **COPY**          | Pattern universal                     |
-| `ponder-schema-specialist/schema-reference.md` | **REGENERATE**    | From ponder.schema.ts                 |
-
-#### TypeScript Domain (PARAMETERIZED)
-
-| Skill                                       | Classification    | Notes                     |
-| ------------------------------------------- | ----------------- | ------------------------- |
-| `typescript-specialist/SKILL.md`            | **COPY**          | TS patterns universal     |
-| `typescript-specialist/project-config.json` | **PARAMETERIZED** | Update paths if different |
-| `typescript-specialist/type-index.json`     | **REGENERATE**    | Index actual types        |
-
-#### QA Skills (COPY)
-
-All QA skills are **COPY** - they use Chrome/browser APIs, not project-specific code:
-
-- `visual-qa/SKILL.md`
-- `visual-qa-chrome-profiler/SKILL.md`
-- `visual-qa-lighthouse/SKILL.md`
-- `visual-qa-react-devtools-profiler/SKILL.md`
-- `visual-qa-react-analyzer/SKILL.md`
-- `visual-qa-react-analyzer/anti-patterns.md`
-- `accessibility-auditor/SKILL.md`
-- `responsive-tester/SKILL.md`
-- `performance-auditor/SKILL.md`
-- `form-edge-case-tester/SKILL.md` (update form field names)
-
-**Exception:** `routes.json` is **PROJECT-SPECIFIC** - defines pages to test.
-
-#### Refactoring Specialists (COPY)
-
-All refactoring specialists are **COPY** - patterns are universal:
-
-- `ui-refactor-specialist/SKILL.md`
-- `code-refactor-specialist/SKILL.md`
-- `types-refactor-specialist/SKILL.md`
-
-#### Workflow Skills (COPY)
-
-- `verify/SKILL.md` - **COPY**
-- `verify-app/SKILL.md` - **COPY**
-- `code-simplifier/SKILL.md` - **COPY**
-- `skill-sync/SKILL.md` - **COPY** (universal for ponder + wagmi + MUI stack)
-- `skill-sync/sync-targets.md` - **COPY** (regeneration instructions are stack-universal)
-- `skills-creator/SKILL.md` - **COPY**
-- `ralph-loop/SKILL.md` - **COPY**
-- `ralph-loop/guardrails.md` - **COPY**
-- `monitor/SKILL.md` - **COPY** (Safety monitor, universal)
-- `monitor/patterns.md` - **COPY** (Dangerous pattern catalog, universal)
-- `analyze-theme/SKILL.md` - **COPY** (MUI theme auditor, universal)
-- `new-component/SKILL.md` - **COPY** (React + MUI scaffold, universal)
-- `new-hook/SKILL.md` - **COPY** (Hook scaffold, universal)
-
-#### Supporting Files
-
-- `qa-prerequisites.md` - **COPY** (port assumption universal)
+| File                    | Classification | Notes                                 |
+| ----------------------- | -------------- | ------------------------------------- |
+| `scripts/defillama.mjs` | **COPY**       | Standalone Node.js, no project deps   |
 
 ---
 
-## Instructions for Skills-Creator Agent
+## Instructions for Setting Up a New Project
 
 When setting up `.claude` for a new project, follow this sequence:
 
@@ -172,10 +189,12 @@ commands/commit-push-pr.md
 # Docs
 docs/data-patterns.md
 
+# Scripts
+scripts/defillama.mjs
+
 # Skills - Copy entire folders
 skills/verify/
 skills/verify-app/
-skills/code-simplifier/
 skills/skill-sync/
 skills/skills-creator/
 skills/ralph-loop/
@@ -184,32 +203,47 @@ skills/analyze-theme/
 skills/new-component/
 skills/new-hook/
 
-skills/ui-designer/SKILL.md
-skills/theme-ui-specialist/
-skills/react-specialist/
-skills/design-dialogue/
-skills/ui-design-specialist/
-skills/ui-design-jony-ive/
+# Agents - Domain
+agents/domain/ui-designer.md
+agents/domain/theme-ui-specialist.md
+agents/domain/react-specialist.md
+agents/domain/design-dialogue.md
+agents/domain/wagmi-specialist.md
+agents/domain/react-query-specialist.md
+agents/domain/ponder-schema-specialist.md
+agents/domain/typescript-specialist.md
+agents/domain/code-refactor-specialist.md
 
-skills/wagmi-specialist/SKILL.md
-skills/react-query-specialist/
-skills/ponder-schema-specialist/SKILL.md
-skills/typescript-specialist/SKILL.md
+# Agents - Design
+agents/design/ui-design-specialist.md
+agents/design/ui-design-jony-ive.md
 
-skills/ui-refactor-specialist/
-skills/code-refactor-specialist/
-skills/types-refactor-specialist/
+# Agents - QA
+agents/qa/visual-qa.md
+agents/qa/visual-qa-chrome-profiler.md
+agents/qa/visual-qa-lighthouse.md
+agents/qa/visual-qa-react-devtools-profiler.md
+agents/qa/visual-qa-react-analyzer.md
+agents/qa/accessibility-auditor.md
+agents/qa/responsive-tester.md
+agents/qa/performance-auditor.md
 
-skills/visual-qa/
-skills/visual-qa-chrome-profiler/
-skills/visual-qa-lighthouse/
-skills/visual-qa-react-devtools-profiler/
-skills/visual-qa-react-analyzer/
-skills/accessibility-auditor/
-skills/responsive-tester/
-skills/performance-auditor/
+# Agents - Refactor
+agents/refactor/ui-refactor-specialist.md
+agents/refactor/code-simplifier.md
+agents/refactor/types-refactor-specialist.md
 
-skills/qa-prerequisites.md
+# Knowledge - Design
+knowledge/design/dialogue-format.md
+knowledge/design/anti-slop-patterns.md
+knowledge/design/design-philosophy.md
+
+# Knowledge - QA
+knowledge/qa/qa-prerequisites.md
+knowledge/qa/react-anti-patterns.md
+
+# Knowledge - Domain (universal only)
+knowledge/domain/react-query-best-practices.md
 ```
 
 ### Phase 2: Parameterize Entity Names
@@ -228,11 +262,11 @@ Files to parameterize:
 - `docs/project-rules.md`
 - `docs/component-reference.md` (if Common components change)
 - `skills/agent-orchestrator/SKILL.md`
-- `skills/agent-orchestrator/agent-registry.md`
-- `skills/web3-implementer/SKILL.md`
-- `skills/web3-implementer/hook-patterns.md`
-- `skills/typescript-specialist/project-config.json`
-- `skills/form-edge-case-tester/SKILL.md`
+- `knowledge/orchestrator/agent-registry.md`
+- `agents/domain/web3-implementer.md`
+- `knowledge/domain/hook-patterns.md`
+- `knowledge/domain/project-config.json`
+- `agents/qa/form-edge-case-tester.md`
 
 ### Phase 3: Regenerate From Source
 
@@ -264,7 +298,7 @@ Read `src/theme/themeConfig.tsx` and extract:
 - All typography variants (sizes, weights, fonts)
 - Any custom palette extensions
 
-**2. Ponder Schema Reference (`skills/ponder-schema-specialist/schema-reference.md`)**
+**2. Ponder Schema Reference (`knowledge/domain/schema-reference.md`)**
 
 If the project has a schema generation script:
 
@@ -276,23 +310,23 @@ Otherwise, read `ponder.schema.ts` and extract tables, columns, indexes, relatio
 
 **3. Hook References**
 
-- `wagmi-specialist/hook-reference.md` — Scan `src/hooks/blockchain/`
-- `wagmi-specialist/contracts-reference.md` — Scan `src/services/contracts/generated.ts`
-- `web3-implementer/ponder-reference.md` — Scan `src/hooks/ponder/`
+- `knowledge/domain/hook-reference.md` -- Scan `src/hooks/blockchain/`
+- `knowledge/domain/contracts-reference.md` -- Scan `src/services/contracts/generated.ts`
+- `knowledge/domain/ponder-reference.md` -- Scan `src/hooks/ponder/`
 
-**4. Type Index (`skills/typescript-specialist/type-index.json`)**
+**4. Type Index (`knowledge/domain/type-index.json`)**
 
 Scan `src/types/` and index all exported interfaces, types, and transform functions.
 
 ### Phase 4: Create Project-Specific Files
 
-#### 1. Routes Configuration (`skills/routes.json`)
+#### 1. Routes Configuration (`agents/qa/routes.json`)
 
 Create a new routes.json with the project's actual pages:
 
 ```json
 {
-  "$schema": "Routes configuration for QA skills",
+  "$schema": "Routes configuration for QA agents",
   "addressSource": "Description of how to find test addresses",
   "routes": [
     {
@@ -310,7 +344,7 @@ Create a new routes.json with the project's actual pages:
 }
 ```
 
-#### 2. Design Patterns (`skills/ui-designer/design-patterns.md`)
+#### 2. Design Patterns (`knowledge/domain/design-patterns.md`)
 
 Create new design patterns document with:
 
@@ -348,7 +382,7 @@ After setup, verify:
 2. **Test key skills:**
    - `/verify` - Should run all checks
    - `/agent-orchestrator` - Should load without errors
-   - `/visual-qa` - Should connect to Chrome
+   - Visual QA agents -- Should connect to Chrome
 
 3. **Check CLAUDE.md loads:**
    - Start a new Claude Code session
@@ -403,15 +437,15 @@ agent-orchestrator
 
 After changes to these locations, update corresponding files:
 
-| Change Location                       | Update File                               |
-| ------------------------------------- | ----------------------------------------- |
-| `src/hooks/ponder/`                   | `web3-implementer/ponder-reference.md`    |
-| `src/hooks/blockchain/`               | `wagmi-specialist/hook-reference.md`      |
-| `src/services/contracts/generated.ts` | `wagmi-specialist/contracts-reference.md` |
-| `src/types/`                          | `typescript-specialist/type-index.json`   |
-| `src/components/Common/`              | `docs/component-reference.md`             |
-| `src/theme/themeConfig.tsx`           | `docs/theme-reference.md`                 |
-| `ponder.schema.ts`                    | Run schema generation script              |
+| Change Location                       | Update File                                    |
+| ------------------------------------- | ---------------------------------------------- |
+| `src/hooks/ponder/`                   | `knowledge/domain/ponder-reference.md`         |
+| `src/hooks/blockchain/`               | `knowledge/domain/hook-reference.md`           |
+| `src/services/contracts/generated.ts` | `knowledge/domain/contracts-reference.md`      |
+| `src/types/`                          | `knowledge/domain/type-index.json`             |
+| `src/components/Common/`              | `docs/component-reference.md`                  |
+| `src/theme/themeConfig.tsx`           | `docs/theme-reference.md`                      |
+| `ponder.schema.ts`                    | Run schema generation script                   |
 
 > **Tip:** Use `/skill-sync` to automatically detect stale files and regenerate them. Run it after adding hooks, types, or schema changes, or before major releases.
 
@@ -424,27 +458,31 @@ After changes to these locations, update corresponding files:
     [ ] Root config files (settings.json, hooks.json)
     [ ] Universal commands
     [ ] Universal skills
+    [ ] Agent files (domain, design, qa, refactor)
+    [ ] Knowledge files (design, qa, universal domain)
+    [ ] Scripts (defillama.mjs)
 
 [ ] Phase 2: Parameterize entity names
     [ ] CLAUDE.md
     [ ] README.md
     [ ] docs/project-rules.md
-    [ ] agent-orchestrator files
-    [ ] web3-implementer files
+    [ ] agent-orchestrator + agent-registry
+    [ ] web3-implementer + hook-patterns
+    [ ] form-edge-case-tester
 
 [ ] Phase 3: Regenerate from source
     [ ] Run `/skill-sync all` (recommended - handles all files below)
     [ ] -- OR manually regenerate: --
     [ ] docs/theme-reference.md (from themeConfig.tsx)
-    [ ] ponder-schema-specialist/schema-reference.md (from ponder.schema.ts)
-    [ ] wagmi-specialist/hook-reference.md (from src/hooks/blockchain/)
-    [ ] wagmi-specialist/contracts-reference.md (from generated.ts)
-    [ ] web3-implementer/ponder-reference.md (from src/hooks/ponder/)
-    [ ] typescript-specialist/type-index.json (from src/types/)
+    [ ] knowledge/domain/schema-reference.md (from ponder.schema.ts)
+    [ ] knowledge/domain/hook-reference.md (from src/hooks/blockchain/)
+    [ ] knowledge/domain/contracts-reference.md (from generated.ts)
+    [ ] knowledge/domain/ponder-reference.md (from src/hooks/ponder/)
+    [ ] knowledge/domain/type-index.json (from src/types/)
 
 [ ] Phase 4: Create project-specific files
-    [ ] skills/routes.json (QA routes)
-    [ ] skills/ui-designer/design-patterns.md
+    [ ] agents/qa/routes.json (QA routes)
+    [ ] knowledge/domain/design-patterns.md
     [ ] commands/update-contracts.md (if applicable)
     [ ] docs/PROTOCOL_SPECIFICATION.md (if applicable)
 

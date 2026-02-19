@@ -13,7 +13,7 @@ Create a new custom React hook following project conventions.
 
 When invoked:
 
-1. Read `.claude/skills/web3-implementer/hook-patterns.md` for layer-appropriate hook templates
+1. Read `.claude/knowledge/domain/hook-patterns.md` for layer-appropriate hook templates
 2. Read `.claude/docs/project-rules.md` for project conventions (two-layer pattern, address safety, etc.)
 3. Read `.claude/docs/data-patterns.md` for the two-layer hook architecture overview
 
@@ -65,7 +65,7 @@ export const useHookName = (params: UseHookNameParams): UseHookNameReturn => {
 
 ## Layer-Specific Patterns
 
-See `.claude/skills/web3-implementer/hook-patterns.md` for complete templates for:
+See `.claude/knowledge/domain/hook-patterns.md` for complete templates for:
 
 - Ponder query hooks (raw data layer)
 - Transform hooks (typed domain objects)
