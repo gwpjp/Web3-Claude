@@ -26,7 +26,6 @@ agent-orchestrator
 │   └── code-refactor-specialist (auto-invoked after hook work)
 ├── typescript-specialist (shared across both trees)
 │   └── types-refactor-specialist (auto-invoked after type work)
-├── protocol-risk-analyst (adversarial protocol research, pre-integration)
 └── ralph-loop (autonomous loops, user-invoked only)
 ```
 
@@ -536,36 +535,6 @@ agent-orchestrator
 
 ---
 
-### `/protocol-risk-analyst` -- Adversarial Protocol Research
-
-**Role:** Adversarial DeFi protocol researcher. Investigates protocols before integration, hunting risks the project doesn't advertise. Default stance is guilty until proven innocent.
-
-**Owns:**
-
-- Protocol risk assessment (team, on-chain, third-party, comparative)
-- DeFiLlama data integration (`scripts/defillama.mjs`)
-- Red flag identification and severity rating
-- Integration recommendations (yes/no/conditional)
-
-**Knowledge files:**
-| File | Purpose |
-|------|---------|
-| `knowledge/research/risk-patterns.md` | Known rug patterns, centralization vectors, Ponzi indicators, yield sustainability checklist |
-
-**When to invoke:**
-
-- Before integrating any new DeFi protocol
-- When evaluating protocol safety for existing integrations
-- When investigating suspicious on-chain patterns
-- For quick-check preliminary screening of protocols
-
-**Constraints:**
-
-- Read-only + research tools only: never modifies project code
-- Available as both a fork-context agent (`agents/research/protocol-risk-analyst.md`) and an interactive skill (`skills/protocol-risk-analyst/`)
-
----
-
 ### `/ui-refactor-specialist` -- UI Component Refactoring
 
 **Role:** Scans UI components for refactoring opportunities after implementation. Auto-invoked by `/ui-designer` after UI work completes. Sub-agent of `/ui-designer`.
@@ -777,7 +746,6 @@ Component (src/components/ or src/pages/) -- UI rendering
 | `/ui-designer`           | `/ui-refactor-specialist`            | "Scan for UI refactoring opportunities" (auto-invoked after UI impl)         |
 | `/web3-implementer`      | `/code-refactor-specialist`          | "Scan for hook refactoring opportunities" (auto-invoked after hook impl)     |
 | `/typescript-specialist` | `/types-refactor-specialist`         | "Scan for type refactoring opportunities" (auto-invoked after type impl)     |
-| `agent-orchestrator`     | `/protocol-risk-analyst`             | "Investigate this protocol before integration" (pre-integration research)    |
 | `agent-orchestrator`     | `/ralph-loop`                        | "This task is suited for autonomous execution" (propose only, user confirms) |
 
 ### Shared Resources
