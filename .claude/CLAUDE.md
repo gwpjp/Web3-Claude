@@ -3,283 +3,150 @@
 ## Quick Reference
 
 - **Package manager:** `yarn` (never npm)
-- **Dev server:** Always running (port in `vite.config.ts` → `server.port`). **Never start it yourself.**
-- **Verify:** `yarn typecheck && yarn lint && yarn prettier && yarn build`
-- **Theme:** `src/theme/themeConfig.tsx` (shared across projects)
-- **UI Testing:** Chrome tab is always open. Navigate directly -- don't launch browsers.
+- **Dev server:** Always running. **Never start it yourself.**
+- **Verify:** `yarn typecheck && yarn lint && yarn prettier && yarn build` -- ALL FOUR, every time
+- **Theme:** `src/theme/themeConfig.tsx`
+- **Chrome:** Tab is always open. Navigate directly.
+- **Orchestration:** ALL planning and execution goes through `/agent-orchestrator`
 
-## Session Memory (Beads)
+## Guardrails (NEVER Override)
 
-Beads provides persistent memory across sessions via git-synced issue tracking.
+Hard prohibitions. Silently avoid. Warn the user if tempted to break one.
 
-### Session Start
+| #   | Guardrail |
+| --- | --------- |
+| G1  | **NEVER push or merge to main.** All merges via GitHub PRs by the user only. |
+| G2  | **NEVER start the dev server** (`yarn dev`). It's already running. |
+| G3  | **NEVER skip verification steps.** All four: typecheck, lint, prettier, build. |
+| G4  | **NEVER plan or execute implementation directly.** Invoke `/agent-orchestrator`. |
+| G5  | **NEVER use `npm`.** Only `yarn`. |
+| G6  | **NEVER use `as Address` on potentially undefined values.** Use `!` (with enabled guard), `?? nullAddress`, or `as Address \| undefined`. |
+| G7  | **NEVER use `useReadContract`/`useReadContracts` in components.** Create hooks in `src/hooks/blockchain/`. |
+| G8  | **NEVER use raw Ponder hooks in components.** Use transform hooks (two-layer pattern). |
+| G9  | **NEVER hardcode colors, fonts, or weights.** Use palette refs and Typography variants. |
+| G10 | **NEVER use `any` type.** Explicit types always. |
 
-1. Build lightweight index: `bd list --json | jq '[.[] | {id, title, status, priority}]'`
-2. Check ready work: `bd ready --json`
-3. Check in-progress: `bd list --status in_progress --json`
+## Just Act (Do Silently)
 
-### Session End (Land the Plane)
+Mechanical rules with no ambiguity. Follow without explanation.
 
-**Work is NOT complete until `git push` succeeds.**
+### Code Patterns
 
-1. **File discovered work:** `bd create "description" -t bug|task|feature -p 0-4`
-2. **Run quality gates** (if code changed): `yarn typecheck && yarn lint && yarn prettier && yarn build`
-3. **Update worked items:** `bd update <id> --status in_progress|closed`
-4. **Push to remote** (MANDATORY):
-   ```bash
-   git pull --rebase
-   bd sync
-   git push
-   git status  # MUST show "up to date with origin"
-   ```
-5. **Hand off:** Provide context for next session
+| Rule | Right | Wrong | Ref |
+| ---- | ----- | ----- | --- |
+| Number formatting | `<NumberFormatter preset="percent" />` | Custom formatter | [project-rules.md#4](docs/project-rules.md#4-number-formatting) |
+| Common components | `CommonButton`, `CTAButton` | Raw MUI `Button` | [project-rules.md#10](docs/project-rules.md#10-common-components) |
+| Blockchain actions | `CTAButton` | `CommonButton` for tx | [project-rules.md#10](docs/project-rules.md#10-common-components) |
+| Input components | `CommonAmountInput`, `CommonTextInput` | Raw MUI `TextField` | [project-rules.md#10](docs/project-rules.md#10-common-components) |
+| Chain data access | `ChainContainer.useContainer()` | `useAccount`, `useChainId` | [project-rules.md](docs/project-rules.md) |
+| Time constants | `SECONDS_IN_A_DAY` from `utils/time.ts` | `days * 24 * 60 * 60` | [project-rules.md](docs/project-rules.md) |
+| TypeScript interfaces | `interface` for objects, `type` for unions | Mixed usage | [project-rules.md](docs/project-rules.md) |
+| Type imports | `import type { Foo }` | `import { Foo }` for types | [project-rules.md](docs/project-rules.md) |
+| React Query | `usePonderQuery` for Ponder, `useQuery` for REST | `useMutation` for blockchain | [data-patterns.md](docs/data-patterns.md) |
+| Query encapsulation | All queries in hooks with `enabled` guards | Queries in components | [data-patterns.md](docs/data-patterns.md) |
+| Two-layer hooks | Component -> Transform Hook -> Ponder Hook | Component -> Ponder Hook | [project-rules.md#9](docs/project-rules.md#9-two-layer-hook-pattern) |
+| Check before creating | Search `src/utils/`, `src/components/Common/` | Creating duplicates | -- |
 
-**Critical rules:**
-- NEVER stop before pushing - that leaves work stranded locally
-- NEVER say "ready to push when you are" - YOU must push
-- If push fails, resolve and retry until it succeeds
+### Session Workflows
 
-### Spawning Agents
+| Trigger | Action |
+| ------- | ------ |
+| Session start | `bd list --json \| jq '[.[] \| {id,title,status,priority}]'` then `bd ready --json` |
+| Discover bug/task | `bd create "description" -t type -p priority` immediately |
+| Code change complete | Run all four verification commands |
+| Session end | File issues -> verify -> push feature branch -> create PR -> `bd sync` |
 
-- Assign by bead ID, not prose: "Work on bd-a1b2"
-- Spawned agent fetches context: `bd show bd-a1b2 --json`
-- On completion: `bd close bd-a1b2 --reason "summary of what was done"`
+## Act but Explain
 
-### Quick Reference
+Changes the user should know about. Proceed, then summarize what and why.
 
-| Action | Command |
-|--------|---------|
-| See ready work | `bd ready --json` |
-| Lightweight index | `bd list --json \| jq '[.[] \| {id, title, status, priority}]'` |
-| Full context for one bead | `bd show <id> --json` |
-| Create new bead | `bd create "title" -t bug\|task\|feature\|epic\|chore -p 0-4` |
-| Close completed | `bd close <id> --reason "summary"` |
-| Update status | `bd update <id> --status ready\|in_progress\|blocked\|closed` |
-| Add dependency | `bd dep add <id> --blocks <other-id>` |
-| Add labels | `bd label add <id> label1,label2` |
-| Filter by label | `bd list --label decision --json` |
-| Sync to git | `bd sync` |
+| Situation | Example |
+| --------- | ------- |
+| Cross-package refactor | Moving shared code between modules |
+| Introducing new pattern | First use of a hook composition or utility pattern |
+| Updating knowledge files | Adding entries to `.claude/knowledge/` |
+| Modifying agent specs | Updating `.claude/agents/` definitions |
+| Creating new hooks | Adding hooks in `src/hooks/blockchain/` |
+| Resolving type conflicts | When generics or unions need restructuring |
+| Applying Beads state changes | Closing, updating, or creating related beads |
 
-### Patterns
+## Ask First
 
-**Index-First:** Keep orchestrator context small by treating bead lists as indexes.
-```bash
-# Lightweight index (small context footprint)
-bd list --json | jq '[.[] | {id, title, status, priority}]'
-# Full context only when needed
-bd show bd-specific-id --json
-```
+Hard-to-reverse or high-impact changes. Stop, present options, wait for approval.
 
-**Decision Tracking:** Capture architectural decisions as durable artifacts.
-```bash
-bd create "Use Zustand over Redux" -t task -p 4 -l decision,architecture \
-  --note "Rationale: Simpler API, smaller bundle, sufficient for current scale"
-```
+| Situation | Why |
+| --------- | --- |
+| Adding new dependencies | Affects bundle size, security surface |
+| Changing public API contracts | Breaks consumers |
+| Architecture changes | Hook patterns, state management, routing |
+| Deleting files | May contain work-in-progress |
+| Modifying CI/CD config | Affects all branches |
+| Changing `.claude/CLAUDE.md` | Affects all agent behavior |
+| Creating new agent specs | Expands agent hierarchy |
+| Modifying security rules | Firestore, storage, RTDB |
+| Force operations | `git reset`, `--force`, `--no-verify` |
 
-**Outcome Labels:** Track whether completed work succeeded or failed.
-```bash
-bd close <id> --reason "Shipped in PR #142"
-bd label add <id> outcome:success
-```
+## Agent Orchestrator
 
-## Project Structure
+**The root agent MUST NOT plan or execute implementation work directly.**
 
-```
-.claude/
-├── agents/         # Fork-context agents (auto-delegated by Claude)
-│   ├── domain/     # Domain orchestrators + specialists (10)
-│   ├── design/     # Design critic agents (2)
-│   ├── qa/         # QA and testing agents (9 + routes.json)
-│   └── refactor/   # Refactoring agents (3)
-├── knowledge/      # Shared knowledge files
-│   ├── domain/     # Domain knowledge (hooks, contracts, schema, types)
-│   ├── design/     # Design philosophy, dialogue format
-│   ├── qa/         # QA prerequisites, React anti-patterns
-│   └── orchestrator/ # Agent registry
-├── scripts/        # Utility scripts (defillama.mjs)
-├── skills/         # User-invocable skills (~10)
-├── commands/       # Simple commands
-└── docs/           # Documentation
-```
-
-```
-src/
-├── components/     # React components (use subfolders for groups)
-├── hooks/          # Custom hooks
-│   ├── blockchain/ # Contract write hooks + transform hooks
-│   ├── ponder/     # Raw Ponder data hooks (never use in components)
-│   └── ...         # Other hooks
-├── pages/          # Route pages
-├── types/          # TypeScript types + transformation functions
-├── utils/          # Utility functions
-├── services/       # External services, ABIs
-└── config/         # Configuration
-```
-
-## Top 5 Rules
-
-### 1. Address Type Safety
-
-**Never use `as Address` on potentially undefined values.** Safe patterns:
-
-- `value!` -- when `enabled` guard guarantees defined
-- `value ?? nullAddress` -- fallback for contract simulation
-- `value as Address | undefined` -- optional returns from hooks
-
-See [docs/project-rules.md](docs/project-rules.md#3-address-type-safety) for full code examples.
-
-### 2. Number Formatting
-
-```typescript
-<NumberFormatter value={0.08} preset="percent" />
-displayNumber(1234.56, "currency")
-```
-
-Presets: `percent`, `currency`, `number`, `full`, `fullPercent`, `input`, `tooltip`.
-Never create custom formatters. See [docs/project-rules.md](docs/project-rules.md#4-number-formatting).
-
-### 3. Common Components Over Raw MUI
-
-**Always check `src/components/Common/` before using raw MUI components.**
-
-Key components: `CommonButton`, `CTAButton` (blockchain actions), `CommonCard`, `CommonDialog`, `CommonSearchInput`, `CommonTextInput`, `CommonAmountInput`, `CommonPercentInput`, `CommonAddressInput`, `CommonSelect`, `CommonMenuItem`, `CommonTooltip`, `TooltipIcon`, `CopyableAddress`, `TokenSymbol`, `NumberFormatter`.
-
-See [docs/project-rules.md](docs/project-rules.md#10-common-components) for full mapping table.
-
-### 4. Contract Reads in Hooks Only
-
-**Never use `useReadContract` or `useReadContracts` in components or pages.**
-Create hooks in `src/hooks/blockchain/`. See [docs/project-rules.md](docs/project-rules.md#8-contract-reads) for template.
-
-### 5. Two-Layer Hook Pattern
-
-Components use **transform hooks** (not raw Ponder hooks):
-
-```
-Component → Transform Hook (hooks/blockchain/) → Ponder Hook (hooks/ponder/)
-            Returns typed domain object           Returns raw data
-```
-
-See [docs/project-rules.md](docs/project-rules.md#9-two-layer-hook-pattern) for architecture diagram.
-
-## Additional Rules
-
-- **TypeScript**: Explicit types, no `any`, `interface` for objects, `type` for unions, `import type` for type-only imports
-- **MUI Theming**: Use palette refs (`bgcolor="paper.primary"`) and Typography variants, never hardcoded colors/fonts/weights. See [docs/theme-reference.md](docs/theme-reference.md).
-- **Chain Data**: Always `ChainContainer.useContainer()`, never wagmi hooks (`useAccount`, `useChainId`) directly in components
-- **Time Constants**: Use `SECONDS_IN_A_DAY` etc. from `src/utils/time.ts`, never hardcode calculations like `days * 24 * 60 * 60`
-- **React Query**: `usePonderQuery` for Ponder data, `useQuery` for REST APIs, never `useMutation` for blockchain tx. Always use `enabled` guards. Encapsulate all queries in hooks.
-
-Full details on all rules: [docs/project-rules.md](docs/project-rules.md)
+- Invoke `/agent-orchestrator` for ANY non-trivial task
+- Orchestrator selects agents from the [full hierarchy](docs/agent-hierarchy.md)
+- Without it, Claude uses generic `Task` agents lacking domain expertise
 
 ## Verification
 
-Always verify before completing a task:
+**Run ALL FOUR after ANY code change:**
 
-1. `yarn typecheck`
-2. `yarn lint`
-3. `yarn prettier` (format all files)
-4. `yarn build`
-5. For UI: Visually verify in the existing Chrome tab (dev server is always running; port in `vite.config.ts`)
-
-## Slash Commands & Skills
-
-**Commands** (simple workflows):
-
-| Command              | Purpose                             |
-| -------------------- | ----------------------------------- |
-| `/fix-lint`          | Fix linting and formatting          |
-| `/fix-number-format` | Fix number formatting anti-patterns |
-| `/commit-push-pr`    | Commit, push, and create PR         |
-| `/update-contracts`  | Update contract ABIs and addresses  |
-| `/verify-ui`         | UI verification checklist           |
-
-**Skills** (user-invocable):
-
-| Skill            | Purpose                                                           |
-| ---------------- | ----------------------------------------------------------------- |
-| `/verify`        | Run typecheck, lint, prettier (auto-fix), build                   |
-| `/analyze-theme` | Find theme violations (hardcoded colors, fonts)                   |
-| `/verify-app`    | Comprehensive verification with code quality + security           |
-| `/skill-sync`    | Sync .claude knowledge files with codebase                        |
-| `/new-component` | Scaffold new React component                                      |
-| `/new-hook`      | Scaffold new custom hook                                          |
-| `/monitor`       | Safety monitor -- catches destructive commands, malicious packages |
-
-**Agents** (auto-delegated by Claude, invoked via agent-orchestrator):
-
-| Agent                    | Purpose                                                 |
-| ------------------------ | ------------------------------------------------------- |
-| `visual-qa`              | Visual QA in Chrome -- bugs, console errors, network    |
-| `accessibility-auditor`  | A11y audit -- ARIA labels, keyboard nav, focus mgmt     |
-| `responsive-tester`      | Test app at mobile/tablet/desktop breakpoints           |
-| `performance-auditor`    | Measure load times, network efficiency, CWV             |
-| `form-edge-case-tester`  | Test form validation, edge cases, error recovery        |
-| `code-simplifier`        | Post-implementation cleanup and simplification          |
-
-## Agent Orchestrator (CRITICAL)
-
-**For any non-trivial implementation task, invoke `/agent-orchestrator` FIRST.**
-
-The agent-orchestrator provides access to the full skill hierarchy:
-
-```
-/agent-orchestrator
-├── ui-designer .............. All UI changes, layout, visual design (agent)
-│   ├── design-dialogue ...... Design critic dialogue (agent)
-│   │   ├── ui-design-specialist Anti-slop critic (agent)
-│   │   └── ui-design-jony-ive  Senior design consultant (agent)
-│   ├── theme-ui-specialist ... Palette, typography, styled(), MUI (agent)
-│   ├── react-specialist ..... Component logic, hooks, state (agent)
-│   ├── visual-qa ............ Chrome visual QA (after changes) (agent)
-│   └── ui-refactor-specialist Auto cleanup after UI work (agent)
-├── web3-implementer ......... All blockchain + ponder data work (agent)
-│   ├── ponder-schema-specialist Schema reference (agent)
-│   ├── wagmi-specialist ..... Contract reads/writes, tx lifecycle (agent)
-│   ├── react-query-specialist Cache strategy, query keys (agent)
-│   └── code-refactor-specialist Auto cleanup after hook work (agent)
-├── typescript-specialist .... Advanced types, generics (shared agent)
-│   └── types-refactor-specialist Auto cleanup after type work (agent)
-└── /ralph-loop ............... Autonomous task loops (user-invoked)
+```bash
+yarn typecheck && yarn lint && yarn prettier && yarn build
 ```
 
-**Why this matters:** Without `/agent-orchestrator` loaded, Claude falls back to generic `Task` agents (`general-purpose`, `Explore`) which lack domain expertise, theme knowledge, and project conventions.
-
-### Plan Execution Rule
-
-When a plan is created (via `EnterPlanMode`), it **MUST** be executed with `/agent-orchestrator` loaded:
-
-1. Plans should include: `> **Execution Requirement:** Before implementing, invoke /agent-orchestrator`
-2. If context is cleared before execution, re-invoke `/agent-orchestrator` first
-3. Never execute implementation plans with generic Task agents
-
-**Anti-pattern:** Creating a plan with agent-orchestrator, clearing context, then executing with `general-purpose` Task agents.
+For UI: Visually verify in the existing Chrome tab.
 
 ## Reference Documents
 
-| Document                                                                   | Contents                                             |
-| -------------------------------------------------------------------------- | ---------------------------------------------------- |
-| [docs/project-rules.md](docs/project-rules.md)                             | All coding rules, safety patterns, and anti-patterns |
-| [docs/theme-reference.md](docs/theme-reference.md)                         | Full palette and typography tables                   |
-| [docs/data-patterns.md](docs/data-patterns.md)                             | Ponder query patterns, blockchain write templates    |
-| [docs/PROTOCOL_SPECIFICATION.md](docs/PROTOCOL_SPECIFICATION.md)           | Protocol-level domain entity design                  |
-| [docs/beads-patterns.md](docs/beads-patterns.md)                           | Beads memory patterns, decision tracking             |
+| Document | Contents |
+| -------- | -------- |
+| [docs/project-rules.md](docs/project-rules.md) | All coding rules, safety patterns, anti-patterns |
+| [docs/theme-reference.md](docs/theme-reference.md) | Full palette and typography tables |
+| [docs/data-patterns.md](docs/data-patterns.md) | Ponder query patterns, blockchain write templates |
+| [docs/PROTOCOL_SPECIFICATION.md](docs/PROTOCOL_SPECIFICATION.md) | Protocol-level domain entity design |
+| [docs/beads-patterns.md](docs/beads-patterns.md) | Beads memory patterns, decision tracking |
+| [docs/skills-reference.md](docs/skills-reference.md) | Commands, skills, and agent catalog |
+| [docs/agent-hierarchy.md](docs/agent-hierarchy.md) | Full agent orchestrator tree |
+| [docs/session-workflow.md](docs/session-workflow.md) | Beads reference + session completion workflow |
 
-## Common Mistakes
+## Session Memory (Beads)
 
-- Running `yarn dev` or starting the dev server (it's already running -- just use the existing Chrome tab)
-- Using `npm` instead of `yarn`
-- Hardcoded colors/fonts (run `/analyze-theme`)
-- Creating duplicate utilities (check `src/utils/` first)
-- Custom number formatting (use `NumberFormatter` or `displayNumber`)
-- Using wagmi directly (use `ChainContainer`)
-- Using `useReadContract`/`useReadContracts` in components (create hooks in `src/hooks/blockchain/`)
-- Using raw Ponder hooks (`usePonder*`) in components (use transform hooks like `useGet*Live`)
-- Using raw MUI `Button` instead of `CommonButton` (check `src/components/Common/` first)
-- Using `CommonButton` for blockchain actions instead of `CTAButton`
-- Using raw MUI `TextField` instead of Common Input components (`CommonSearchInput`, `CommonAmountInput`, etc.)
-- Using `as Address` to cast potentially undefined values (use `!` with enabled guards or `?? nullAddress`)
-- Discovering bugs/tasks but not filing them as beads (run `bd create` immediately)
-- Passing prose descriptions to spawned agents instead of bead IDs (use "Work on bd-a1b2")
-- Loading full bead lists into context (use `jq` to filter to lightweight index first)
-- Not syncing beads before session end (`bd sync`)
+Persistent memory via git-synced issue tracking. Treat bead lists as lightweight indexes.
+
+```bash
+# Session start
+bd list --json | jq '[.[] | {id, title, status, priority}]'
+bd ready --json
+
+# Session end
+bd create "..." -t type -p priority    # File discovered work
+bd update <id> --status closed         # Close finished items
+bd sync                                # Sync to git
+```
+
+Full reference: [docs/session-workflow.md](docs/session-workflow.md)
+
+## Git Rules
+
+- **NEVER push or merge to main.** Feature branches only. User merges via PRs.
+- Sub-branches merge to parent branch, not main.
+- Push feature branch + create PR before session ends.
+- Work is NOT complete until `git push` succeeds.
+- NEVER stop before pushing -- that strands work locally.
+
+## Gotchas (Hard-Won Lessons)
+
+1. **Dev server is running.** `yarn dev` will fail or create a conflicting instance.
+2. **Data before UI.** Wire hooks and verify data flow before building components.
+3. **Check existing code first.** `src/utils/`, `src/components/Common/` -- duplicates are the #1 review comment.
+4. **File beads immediately.** If you discover a bug or task, `bd create` NOW, not "later."
+5. **Sync beads before ending.** `bd sync` or changes stay local.
+6. **Visually verify UI changes.** The Chrome tab is already open -- navigate and check.
