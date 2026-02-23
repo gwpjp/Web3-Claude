@@ -46,6 +46,21 @@ agent-orchestrator (YOU)
 
 **You own the top-level decisions.** Sub-agents own their domains. You decide _what_ needs to happen and _who_ does it. They decide _how_ within their domain.
 
+## Context Budget (CRITICAL)
+
+Your context window is for ROUTING and COORDINATION. Sub-agents have their own context windows for source code.
+
+### Orchestrator Reads (routing metadata):
+- `agent-registry.md` -- agent capabilities and routing rules
+- Knowledge reference files (hook-reference.md, type-index.json) -- to check what EXISTS
+
+### Orchestrator NEVER Reads:
+- Source code files (`src/**/*.tsx`, `src/**/*.ts`) -- that's the sub-agent's job
+- If you catch yourself reading a `.tsx` or `.ts` source file, STOP
+
+### Exception:
+- Reading a file to verify INTEGRATION between two sub-agent outputs is acceptable
+
 ## Task Classification
 
 When a task arrives, classify it into one or more domains:
@@ -159,7 +174,8 @@ Before any implementation:
 For each domain:
 
 - Invoke the appropriate agent with a clear, scoped description of what's needed
-- Include relevant context (existing files, constraints, design decisions)
+- **Include relevant file paths** for the sub-agent to read in its own context window
+- Include constraints and design decisions (but NOT file contents -- the sub-agent reads those itself)
 - Specify what the agent should produce
 
 ### 3. Coordinate Cross-Domain Integration
