@@ -208,6 +208,18 @@ Analyze all commits and file changes to generate a comprehensive description:
 
 [1-3 sentences explaining what this PR does and why]
 
+## AI Role
+
+[Identify which sections were agent-generated vs human-authored.
+Example: "All implementation code agent-generated via ui-designer and web3-implementer.
+Architecture decisions and hook interfaces human-specified."]
+
+## Review Focus
+
+[1-2 specific areas where human review should concentrate.
+Example: "Focus on the liquidation threshold calculation in useHealthFactor.ts
+and the error boundary logic in VaultDetail.tsx."]
+
 ## Changes
 
 - **Added:** [new files, features, or capabilities]
